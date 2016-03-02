@@ -1,0 +1,31 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+
+repositories {
+    mavenCentral()
+}
+
+
+dependencies {
+    compile('io.dropwizard:dropwizard-core:0.8.4')
+	compile('mysql:mysql-connector-java:5.1.6')
+	compile('org.json:json:20090211')
+    compile fileTree(dir: 'lib', include: ['*.jar'])
+}
+
+version = '1.0'
+
+mainClassName = 'org.application.DataApplication'
+
+task copyToLib( type: Copy ) {
+    into "$buildDir/libs/lib"
+    from configurations.runtime
+}
+
+jar { 
+	dependsOn copyToLib 
+}
